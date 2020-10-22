@@ -44,4 +44,25 @@ public class CategoryController {
 		model.addAttribute("category", categoryService.findById(id));
 		return "category";
 	}
+	
+	@PostMapping("/admin/category/update")
+	public String updateCategory(@ModelAttribute("blogCategory") BlogCategory blogCategory) {
+		categoryService.editCategory(blogCategory);
+		return "redirect:/admin/category/show#cat_table";
+	}
+	
+	@GetMapping("/admin/category/delete/{id}")
+	public String deleteCategory(@PathVariable("id") int id) {
+		
+		BlogCategory cat = new BlogCategory();
+		cat.setId(id);
+		
+//		BlogCategory cat = categoryService.findById(id);
+		
+		categoryService.deleteCategory(cat);
+		
+		return "redirect:/admin/category/show#cat_table";
+	}
+	
+	
 }
